@@ -4,12 +4,12 @@ d3.json('samples.json').then((data) => {
 });
 
 // chart function
-function charts(sample) {
+function chartgenerator(sample) {
 
     // Read in data
     d3.json('samples.json').then((data) => {
         var sampledata = data.samples;
-        console.log(sampledata)
+        //console.log(sampledata)
         // object filter
         var results = sampledata.filter(sampleobject => sampleobject.id == sample)[0];
         //console.log(results)
@@ -65,10 +65,10 @@ function charts(sample) {
             Plotly.newPlot('bubble', bubbledata, layout);
         });
     });
-}
+};
 
 // metadata variables
-function metadata(sample) {
+function metadatafunction(sample) {
     d3.json('samples.json').then((data) => {
         var sampleMeta = data.metadata;
         var results = sampleMeta.filter(sampleobject => sampleobject.id == sample)[0];
@@ -84,31 +84,31 @@ function metadata(sample) {
 
 
 
-// Add sample names to drop down menu
+//Dropdown menu
 function init() {
     var dropdown = d3.selectAll('#selDataset');
 
-    // Read in json and add sample names to a variable
+    // sample name variables
     d3.json('samples.json').then((data) => {
-        var samplenames = data.names;
+        var sampleNames = data.names;
 
-        samplenames.forEach((sample) => {
+        sampleNames.forEach((sample) => {
             dropdown
                 .append('option')
                 .text(sample)
                 .property('value', sample);
         });
 
-        var sample = samplenames[0];
-        charts(sample);
-        metadata(sample);
+        var firstsample = sampleNames[0];
+        chartgenerator(firstsample);
+        metadatafunction(firstsample);
 
     });
 }
 
 function samplechange(newsample) {
-    charts(newsample);
-    metadata(newsample);
+    chartgenerator(newsample);
+    metadatafunction(newsample);
 }
 
 init();
